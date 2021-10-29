@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "jdrfinance",
+    "slug": "jdrfinance",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "jdrfinance"
+}
