@@ -1,12 +1,31 @@
-import React from 'react';
+import React from "react";
 
-import { Container, Title } from './styles';
+import {
+  Container,
+  Header,
+  UserInfo,
+  Photo,
+  User,
+  UserGreeting,
+  UserName,
+  UserWrapper
+} from "./styles";
 
-
-export function Dashboard(){
+export function Dashboard() {
   return (
-   <Container>
-       <Title>DashBoard</Title>
-   </Container>
+    <Container>
+      <Header>
+        <UserWrapper>
+          <UserInfo>
+            <Photo source={{ uri: "https://github.com/joaodias-rms.png" }} />
+
+            <User>
+              <UserGreeting>Olá,</UserGreeting>
+              <UserName>João</UserName>
+            </User>
+          </UserInfo>
+        </UserWrapper>
+      </Header>
+    </Container>
   );
 }
