@@ -17,15 +17,39 @@ import {
 } from "./styles";
 
 import { HighlightCard } from "../../components/HighlightCard";
-import { TransactionCard } from "../../components/TransactionCard";
+import { TransactionCard, TransactionCardProps } from "../../components/TransactionCard";
+
+export interface TransactionListProps extends TransactionCardProps{
+  id: string;
+}
 
 export function Dashboard() {
-  const data = {
-    title: "Desenvolvimento de site",
-    amount: "R$6.500,00",
-    date: "01/08/2021",
-    category: { name: "Vendas", icon: "dollar-sign" },
-  };
+  const data: TransactionListProps[] = [
+    {
+      id: '1',
+      type: 'incoming',
+      title: "Desenvolvimento de site",
+      amount: "R$6.500,00",
+      date: "01/08/2021",
+      category: { name: "Vendas", icon: "dollar-sign" },
+    },
+    {
+      id: '2',
+      type: 'outcoming',
+      title: "Lanche",
+      amount: "R$50,00",
+      date: "01/08/2021",
+      category: { name: "Alimentação", icon: "coffee" },
+    },
+    {
+      id: '3',
+      type: 'incoming',
+      title: "Desenvolvimento de app",
+      amount: "R$2.500,00",
+      date: "01/08/2021",
+      category: { name: "Vendas", icon: "dollar-sign" },
+    },
+  ];
 
   return (
     <Container>
@@ -64,9 +88,12 @@ export function Dashboard() {
       </HighlightCards>
       <Transactions>
         <Title>Movimentações</Title>
-        <TransactionsList />
-          <TransactionCard data={data} />
-
+        <TransactionsList
+          data={data}
+          keyExtractor={(item)=> item.id}
+          renderItem={({ item }) => <TransactionCard data={item}
+          />}
+        />
       </Transactions>
     </Container>
   );
