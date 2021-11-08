@@ -16,27 +16,31 @@ interface CategoryProps {
   icon: string;
 }
 
-interface Data {
-    title: string;
-    amount: string;
-    category: CategoryProps;
-    date: string;
+export interface TransactionCardProps {
+  type: "incoming" | "outcoming";
+  title: string;
+  amount: string;
+  category: CategoryProps;
+  date: string;
 }
 
 interface Props {
-  data: Data
+  data: TransactionCardProps;
 }
 
-export function TransactionCard({data }: Props) {
+export function TransactionCard({ data }: Props) {
   return (
     <Container>
       <Title>{data.title}</Title>
 
-      <Amount>{data.amount}</Amount>
+      <Amount type={data.type}>
+        {data.type === "outcoming" && "- "}
+        {data.amount}
+      </Amount>
 
       <Footer>
         <Category>
-          <Icon name="dollar-sign" />
+          <Icon name={data.category.icon} />
           <CategoryName>{data.category.name}</CategoryName>
         </Category>
         <Date>{data.date}</Date>
