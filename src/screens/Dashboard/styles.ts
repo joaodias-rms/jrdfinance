@@ -1,7 +1,13 @@
+import { FlatList } from "react-native";
 import styled from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import {
+  getStatusBarHeight,
+  getBottomSpace,
+} from "react-native-iphone-x-helper";
+
+import { TransactionListProps } from ".";
 
 export const Container = styled.View`
   flex: 1;
@@ -53,7 +59,7 @@ export const UserName = styled.Text`
 
 export const Icon = styled(Feather)`
   color: ${({ theme }) => theme.colors.secondary};
-  font-size: ${RFValue(24)};
+  font-size: ${RFValue(24)}px;
 `;
 
 export const HighlightCards = styled.ScrollView.attrs({
@@ -79,6 +85,9 @@ export const Title = styled.Text`
   margin-bottom: 16px;
 `;
 
-export const TransactionsList = styled.FlatList`
-    
-`;
+export const TransactionsList = styled(
+  FlatList as new () => FlatList<TransactionListProps>
+).attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: { paddingBottom: getBottomSpace() },
+})``;
