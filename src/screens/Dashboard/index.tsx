@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 import {
   Container,
@@ -14,43 +16,64 @@ import {
   Transactions,
   TransactionsList,
   Title,
-  LogoutButton
+  LogoutButton,
 } from "./styles";
 
 import { HighlightCard } from "../../components/HighlightCard";
-import { TransactionCard, TransactionCardProps } from "../../components/TransactionCard";
+import {
+  TransactionCard,
+  TransactionCardProps,
+} from "../../components/TransactionCard";
+import { useEffect } from "react";
 
-export interface TransactionListProps extends TransactionCardProps{
+export interface TransactionListProps extends TransactionCardProps {
   id: string;
 }
 
 export function Dashboard() {
-  const data: TransactionListProps[] = [
-    {
-      id: '1',
-      type: 'incoming',
-      title: "Desenvolvimento de site",
-      amount: "R$6.500,00",
-      date: "01/08/2021",
-      category: { name: "Vendas", icon: "dollar-sign" },
-    },
-    {
-      id: '2',
-      type: 'outcoming',
-      title: "Lanche",
-      amount: "R$50,00",
-      date: "01/08/2021",
-      category: { name: "Alimentação", icon: "coffee" },
-    },
-    {
-      id: '3',
-      type: 'incoming',
-      title: "Desenvolvimento de app",
-      amount: "R$2.500,00",
-      date: "01/08/2021",
-      category: { name: "Vendas", icon: "dollar-sign" },
-    },
-  ];
+  const [data, setData] = useState<TransactionListProps[]>([]);
+
+  async function loadTransactions() {
+    const dataKey = "@jrdfinance:transactions";
+    const response = await AsyncStorage.getItem(dataKey);
+
+    const transactions = response ? JSON.parse(response) : [];
+
+    const TransactionsFormatted: TransactionListProps = transactions.map(
+      (item: TransactionListProps) => {
+        const amount = Number(item.amount).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+
+        const date = Intl.DateTimeFormat("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+        }).format(new Date(item.date));
+        return {
+          id: item.id,
+          name: item.name,
+          amount,
+          type: item.type,
+          category: item.category,
+          date,
+        };
+      }
+    );
+    setData(TransactionsFormatted);
+  }
+
+  useEffect(() => {
+    loadTransactions();
+
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadTransactions();
+    }, [])
+  );
 
   return (
     <Container>
@@ -64,8 +87,8 @@ export function Dashboard() {
               <UserName>João</UserName>
             </User>
           </UserInfo>
-          <LogoutButton onPress={()=>{}}>
-          <Icon name="power" />
+          <LogoutButton onPress={() => {}}>
+            <Icon name="power" />
           </LogoutButton>
         </UserWrapper>
       </Header>
@@ -93,9 +116,8 @@ export function Dashboard() {
         <Title>Movimentações</Title>
         <TransactionsList
           data={data}
-          keyExtractor={(item)=> item.id}
-          renderItem={({ item }) => <TransactionCard data={item}
-          />}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <TransactionCard data={item} />}
         />
       </Transactions>
     </Container>
