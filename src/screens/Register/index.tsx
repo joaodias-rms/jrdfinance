@@ -42,28 +42,27 @@ export function Register() {
   });
   const [transactionType, setTransactionType] = useState("");
   const [categoryModal, setCategoryModal] = useState(false);
-  const dataKey = "@jrdfinance:transactions";
-
+  
   const navigation = useNavigation();
-
+  
   const {
     control,
     reset,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
-
+  
   function handleTransaction(type: "incoming" | "outcoming") {
     setTransactionType(type);
   }
-
+  
   function handleOpenSelectCategory() {
     setCategoryModal(true);
   }
   function handleCloseSelectCategory() {
     setCategoryModal(false);
   }
-
+  
   async function handleRegister(form: FormData) {
     if (!transactionType) {
       return Alert.alert("Selecione o tipo de transação");
@@ -80,6 +79,7 @@ export function Register() {
       date: new Date(),
     };
     try {
+      const dataKey = "@jrdfinance:transactions";
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
