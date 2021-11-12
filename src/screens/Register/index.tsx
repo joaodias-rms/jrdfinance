@@ -32,7 +32,8 @@ const schema = Yup.object().shape({
   name: Yup.string().required("Preencha o nome"),
   amount: Yup.number()
     .typeError("informe um valor numérico")
-    .positive("O valor não pode ser negativo"),
+    .positive("O valor não pode ser negativo")
+    .required("Preencha o valor"),
 });
 
 export function Register() {
