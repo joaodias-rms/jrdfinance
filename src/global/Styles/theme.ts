@@ -1,12 +1,12 @@
 export default {
   colors: {
-    primary: "#EBDEA7",
-    secondary: "#52481F",
-    secondary_light: "rgba(82,72,31 ,0.3)",
+    primary: "#8634eb",
+    secondary: "#56DBBA",
+    secondary_light: "rgba(86,219,186,0.5)",
 
     success: "#12a454",
     success_light: "rgba(18,164,84,0.5)",
-
+    
     attention: "#e83f5b",
     attention_light: "rgba(232,63,91, 0.5)",
 
