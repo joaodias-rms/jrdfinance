@@ -5,7 +5,7 @@ import { AppRoutes } from "./src/routes/app.routes";
 import 'intl'
 import 'intl/locale-data/jsonp/pt-BR'
 
-import { Register } from "./src/screens/Register";
+import { SignIn } from "./src/screens/SignIn";
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
@@ -30,7 +30,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
-        <AppRoutes />
+        <SignIn />
       </NavigationContainer>
     </ThemeProvider>
   );
