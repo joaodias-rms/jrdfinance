@@ -2,7 +2,7 @@
   "expo": {
     "name": "jdrfinance",
     "slug": "jdrfinance",
-    "schema": "jdrfinance",
+    "scheme": "jdrfinance",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
