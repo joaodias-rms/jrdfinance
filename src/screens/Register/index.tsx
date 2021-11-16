@@ -80,7 +80,7 @@ export function Register() {
       date: new Date(),
     };
     try {
-      const dataKey = "@jrdfinance:transactions";
+      const dataKey = "@jdrfinance:transactions";
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
