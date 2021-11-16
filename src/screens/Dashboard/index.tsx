@@ -28,6 +28,7 @@ import {
 } from "../../components/TransactionCard";
 import { useEffect } from "react";
 import theme from "../../global/Styles/theme";
+import { useAuth } from "../../hooks/auth";
 
 export interface TransactionListProps extends TransactionCardProps {
   id: string;
@@ -49,6 +50,7 @@ export function Dashboard() {
   const [highlighCardData, setHighlightCardData] = useState<HighlightCardData>(
     {} as HighlightCardData
   );
+  const {signOut, user} = useAuth();
 
   //função pra buscar a data da última transação
   function getLastData(
@@ -163,15 +165,15 @@ export function Dashboard() {
             <UserWrapper>
               <UserInfo>
                 <Photo
-                  source={{ uri: "https://github.com/joaodias-rms.png" }}
+                  source={{ uri: user.photo }}
                 />
 
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>João</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
-              <LogoutButton onPress={() => {}}>
+              <LogoutButton onPress={signOut}>
                 <Icon name="power" />
               </LogoutButton>
             </UserWrapper>
