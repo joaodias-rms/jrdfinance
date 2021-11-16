@@ -17,11 +17,20 @@ import {
   Footer,
   ButtonWrapper,
 } from "./styles";
+import { Alert } from "react-native";
 
 export function SignIn() {
-  const {user} = useAuth()
-  console.log(user.email);
-  
+  const { signInWithGoogle } = useAuth();
+
+  async function handleSignInWithGoogle(){
+    try {
+      await signInWithGoogle()
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Não foi possível realizar o login')
+    }
+  }
+
   return (
     <Container>
       <Header>
@@ -37,7 +46,7 @@ export function SignIn() {
       </Header>
       <Footer>
         <ButtonWrapper>
-          <SignInSocialButton title="Entrar com Google" svg={Google} />
+          <SignInSocialButton title="Entrar com Google" svg={Google} onPress={handleSignInWithGoogle}/>
           <SignInSocialButton title="Entrar com Apple" svg={Apple} />
         </ButtonWrapper>
       </Footer>
