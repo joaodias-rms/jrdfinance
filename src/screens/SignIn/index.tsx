@@ -27,22 +27,20 @@ export function SignIn() {
   async function handleSignInWithGoogle() {
     try {
       setIsloading(true);
-     return await signInWithGoogle();
+      return await signInWithGoogle();
     } catch (error) {
       console.log(error);
       Alert.alert("Não foi possível realizar o login em sua conta Google");
-    } finally {
       setIsloading(false);
     }
   }
   async function handleSignInWithApple() {
     try {
       setIsloading(true);
-     return await signInWithApple();
+      return await signInWithApple();
     } catch (error) {
       console.log(error);
       Alert.alert("Não foi possível realizar o login em sua conta Apple");
-    } finally {
       setIsloading(false);
     }
   }
@@ -62,26 +60,19 @@ export function SignIn() {
       </Header>
       <Footer>
         <ButtonWrapper>
-          {Platform.OS === "ios" ? (
-            <>
-              <SignInSocialButton
-                title="Entrar com Apple"
-                svg={Apple}
-                onPress={handleSignInWithApple}
-              />
-              <SignInSocialButton
-                title="Entrar com Google"
-                svg={Google}
-                onPress={handleSignInWithGoogle}
-              />
-            </>
-          ) : (
+          {Platform.OS === "ios" && (
             <SignInSocialButton
-              title="Entrar com Google"
-              svg={Google}
-              onPress={handleSignInWithGoogle}
+              title="Entrar com Apple"
+              svg={Apple}
+              onPress={handleSignInWithApple}
             />
           )}
+
+          <SignInSocialButton
+            title="Entrar com Google"
+            svg={Google}
+            onPress={handleSignInWithGoogle}
+          />
         </ButtonWrapper>
         {isLoading && (
           <ActivityIndicator size="small" color={theme.colors.primary} />
