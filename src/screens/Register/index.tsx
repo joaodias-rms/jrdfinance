@@ -7,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../hooks/auth";
+
 import { Button } from "../../components/Forms/Button";
 import { InputForm } from "../../components/Forms/InputForm";
 import { CategorySelectInput } from "../../components/Forms/CategorySelectInput";
@@ -45,6 +47,7 @@ export function Register() {
   const [categoryModal, setCategoryModal] = useState(false);
   
   const navigation = useNavigation();
+  const {user} = useAuth();
   
   const {
     control,
@@ -80,7 +83,7 @@ export function Register() {
       date: new Date(),
     };
     try {
-      const dataKey = "@jdrfinance:transactions";
+      const dataKey = `@jdrfinance:transactions_user:${user.id}`;
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
