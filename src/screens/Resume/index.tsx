@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useFocusEffect  } from "@react-navigation/native";
+import React, { useState, useCallback } from "react";
 import { ActivityIndicator } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RFValue } from "react-native-responsive-fontsize";
-import { VictoryPie } from "victory-native";
+import { useFocusEffect  } from "@react-navigation/native";
+import { useAuth } from "../../hooks/auth";
+
 import { addMonths, subMonths, format } from "date-fns";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { VictoryPie } from "victory-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ptBR } from "date-fns/locale";
 
 import { TransactionListProps } from "../Dashboard";
 import { HistoryCard } from "../../components/HistoryCard";
 
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { categories } from "../../utils/categories";
-import theme from "../../global/Styles/theme";
 import {
   Container,
   Title,
@@ -25,6 +25,8 @@ import {
   Month,
   LoadContainer,
 } from "./styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import theme from "../../global/Styles/theme";
 
 interface CategoryData {
   key: string;
@@ -41,6 +43,7 @@ export function Resume() {
   const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>(
     []
   );
+  const {user} = useAuth()
 
   function handleDateChange(action: "next" | "prev") {
     if (action === "next") {
@@ -52,7 +55,7 @@ export function Resume() {
 
   async function loadData() {
     setIsLoading(true)
-    const dataKey = "@jdrfinance:transactions";
+    const dataKey = `@jdrfinance:transactions_user:${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
     const responseFormatted = response ? JSON.parse(response) : [];
 
