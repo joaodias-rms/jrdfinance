@@ -11,7 +11,7 @@ import { useAuth } from "../../hooks/auth";
 
 import { Button } from "../../components/Forms/Button";
 import { InputForm } from "../../components/Forms/InputForm";
-import { CategorySelectInput } from "../../components/Forms/CategorySelectInput";
+import { CategorySelectButton } from "../../components/Forms/CategorySelectButton";
 import { TransactionTypeButton } from "../../components/Forms/TransactionTypeButton";
 
 import { CategorySelect } from "../CategorySelect";
@@ -46,7 +46,7 @@ export function Register() {
   const [transactionType, setTransactionType] = useState("");
   const [categoryModal, setCategoryModal] = useState(false);
   
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const {user} = useAuth();
   
   const {
@@ -141,7 +141,8 @@ export function Register() {
                 title="Outcome"
               />
             </TransactionTypes>
-            <CategorySelectInput
+            <CategorySelectButton
+              testID="button-category"
               title={category.name}
               onPress={handleOpenSelectCategory}
             />
@@ -149,7 +150,7 @@ export function Register() {
           <Button title="Enviar" onPress={handleSubmit(handleRegister)} />
         </Form>
 
-        <Modal visible={categoryModal}>
+        <Modal testID="modal-category" visible={categoryModal}>
           <CategorySelect
             category={category}
             setCategory={setCategory}
