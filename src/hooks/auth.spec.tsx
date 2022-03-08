@@ -27,9 +27,9 @@ describe("Auth-Hook", () => {
 
     fetchMock.mockResponseOnce(
       JSON.stringify({
-        id:    "any_id",
+        id: "any_id",
         email: "jvd.ramos@hotmail.com",
-        name:  "João Victor",
+        name: "João Victor",
         photo: "any_photo.png",
       })
     );
@@ -57,5 +57,17 @@ describe("Auth-Hook", () => {
     await act(async () => await result.current.signInWithGoogle());
 
     expect(result.current.user).not.toHaveProperty("id");
+  });
+
+  it("should be error with google authentication", async () => {
+    const { result } = renderHook(() => useAuth(), {
+      wrapper: AuthProvider,
+    });
+
+    try {
+      await act(async () => await result.current.signInWithGoogle());
+    } catch {
+      expect(result.current.user).toEqual({});
+    }
   });
 });
